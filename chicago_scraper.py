@@ -24,10 +24,10 @@ def get_html(ward):
     You should save the resulting HTML in a variable called html.
     '''
 
-    url = http://www.chicagoelections.com/en/pctlevel3.asp # Put the correct URL here
+    url = 'http://www.chicagoelections.com/en/pctlevel3.asp' # Put the correct URL here
 
     # we'll talk about this Friday
-    html = requests.get(url).content
+    html = requests.get(url, params={'ward':ward, 'elec_code':'9', 'race_number': '10'}).content
 
     return html # Leave this line here. Just be sure to call your variable html.
 
@@ -40,6 +40,10 @@ def get_table(html):
     '''
 
     # Write your code here
+    soup = BeautifulSoup(html, "html.parser")
+
+    table = soup.find('table')
+
 
     return table # Leave this line here. Just be sure to call your variable table.
 
@@ -57,7 +61,7 @@ def load_results():
     message = None
     results = []
 
-    for ward in range(0, 49):
+    for ward in range(1, RANGE):
         html = get_html(ward)
         table = get_table(html)
 
